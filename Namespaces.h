@@ -9,15 +9,17 @@ wheat
 
 enum class Entities
 {
+	Air,
 	Wheatseed,
+	Wheat,
 	Cornseed,
+	Corn,
 	Chicken,
 	Cow,
-	Wheat,
-	Corn,
 	Egg,
 	Milk
 };
 
 std::string EntityToString(Entities);
 Entities StringToEntity(const std::string&);
+Entities& operator++(Entities& e);

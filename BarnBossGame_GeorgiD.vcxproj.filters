@@ -24,6 +24,12 @@
     <ClCompile Include="Namespaces.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Barn.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlantEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="User.h">
@@ -36,6 +42,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Barn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlantEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

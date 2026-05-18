@@ -46,3 +46,10 @@ Entities StringToEntity(const std::string& s)
 
 	else throw std::invalid_argument("Invalid product!");
 }
+
+Entities& operator++(Entities& e)
+{
+	e = static_cast<Entities>(static_cast<int>(e) + 1);
+
+	return e;
+}
