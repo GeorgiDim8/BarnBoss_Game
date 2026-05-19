@@ -1,5 +1,6 @@
 #include "PlantEntity.h"
 
+/*
 PlantEntity::PlantEntity(Entities& e)
 {
     switch (e) 
@@ -66,16 +67,22 @@ void PlantEntity::SetEntity(Entities e)
     entity = e;
 }
 
-void PlantEntity::SetGrown()
-{
-    Grown = true;
-}
+
 
 bool PlantEntity::Ready()
 {
     if (required_cycles <= current_cycles)return true;
 
     return false;
+}
+*/
+void PlantEntity::SetGrown()
+{
+    Grown = true;
+}
+bool PlantEntity::GetGrown() const
+{
+    return Grown;
 }
 
 void PlantEntity::Cycle()
@@ -91,11 +98,14 @@ void PlantEntity::Cycle()
     }
 }
 
-Entities PlantEntity::Reward() const
+bool PlantEntity::Harvest(Barn& barn)
 {
-    if (GetGrown())return GetEntity();
+    if (GetGrown()) {
+        barn.AddItem(GetEntity(), 1);
+        return true;
+    }
+    return false;
 
-    return Entities::Air;
 }
 
 void PlantEntity::Print() const

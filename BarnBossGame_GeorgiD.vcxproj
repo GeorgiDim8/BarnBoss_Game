@@ -127,8 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimalEntity.cpp" />
     <ClCompile Include="Barn.cpp" />
     <ClCompile Include="BarnBossGame_GeorgiD.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Farm.cpp" />
     <ClCompile Include="Namespaces.cpp">
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdcpp23</LanguageStandard>
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdcpp23</LanguageStandard>
@@ -137,7 +140,9 @@
     <ClCompile Include="User.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimalEntity.h" />
     <ClInclude Include="Barn.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="Farm.h" />
     <ClInclude Include="Namespaces.h" />
     <ClInclude Include="PlantEntity.h" />

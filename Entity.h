@@ -1,5 +1,6 @@
 #pragma once
 #include "Namespaces.h"
+#include "Barn.h"
 
 class Entity 
 {
@@ -22,7 +23,7 @@ public:
 
 	bool Ready();
 	virtual void Cycle() = 0;
-	virtual Entities Reward() const = 0;
+	virtual bool Harvest(Barn& barn) = 0;
 
 	virtual void Print() const = 0;
 
