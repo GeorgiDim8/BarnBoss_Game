@@ -2,6 +2,7 @@
 #include "User.h"
 #include "Farm.h"
 #include "Market.h"
+#include "Taskboard.h"
 
 class Player : public User 
 {
@@ -26,10 +27,13 @@ public:
 	void OpenMarketCatalog(Market& market);
 	bool BuyItem(Market& market, int productId, int quantity);
 	bool SellItem(Market& market, int productId, int quantity);
-	void ShowTaskBoard();
-	bool CompleteTask(int taskId);
+	void ShowTaskBoard(Taskboard& taskboard);
+	bool CompleteTask(Taskboard& taskboard, int taskId);
 
 	Barn& GetBarn();
+	int GetBalance();
+	int GetScore();
+	void SetScore(int s);
 	void Cycle();
 
 };

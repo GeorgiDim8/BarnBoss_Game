@@ -59,3 +59,12 @@ Entities& operator++(Entities& e)
 
 	return e;
 }
+
+bool IdCheck(int productId) 
+{
+	if (productId < 1 || productId > 8) {
+		std::cout << "Wrong id" << std::endl;
+		return false;
+	}
+	return true;
+}

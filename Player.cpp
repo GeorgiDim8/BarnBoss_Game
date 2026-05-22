@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Namespaces.h"
 
 Player::Player(const std::string& name, const std::string& password)
 {
@@ -107,9 +108,39 @@ bool Player::SellItem(Market& market, int productId, int quantity)
 	return false;
 }
 
+void Player::ShowTaskBoard(Taskboard& taskboard)
+{
+	taskboard.Print();
+}
+
+bool Player::CompleteTask(Taskboard& taskboard, int taskId)
+{
+	if (taskboard.CompleteTask(*this, taskId))
+	{
+		Cycle();
+		return true;
+	}
+	return false;
+}
+
 Barn& Player::GetBarn()
 {
 	return barn;
+}
+
+int Player::GetBalance()
+{
+	return balance;
+}
+
+int Player::GetScore()
+{
+	return score;
+}
+
+void Player::SetScore(int s)
+{
+	score = s;
 }
 
 void Player::Cycle()
