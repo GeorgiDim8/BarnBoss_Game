@@ -8,10 +8,16 @@ class User
 	std::string username;
 	std::string password;
 
+public:
+
+	std::string GetPassword();
+	void SetPassword(const std::string& password);
+	void SetName(const std::string& name);
+
 	void logout();
 	void changePassword(const std::string& oldPassword, const std::string& newPassword);
 	void profileInfo();
 	virtual void Register(const std::string& username, const std::string& password, const std::string& type);
 
-
+	virtual ~User() = default;
 };

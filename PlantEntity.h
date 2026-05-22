@@ -2,7 +2,7 @@
 #include "Namespaces.h"
 #include "Entity.h"
 
-class PlantEntity : Entity
+class PlantEntity : public Entity
 {
 	bool Grown = false;
 	
@@ -21,6 +21,8 @@ public:
 	void SetGrown();
 	bool Ready();
 	*/
+	PlantEntity(Entities& e);
+
 	bool GetGrown() const;
 	void SetGrown();
 	void Cycle() override;

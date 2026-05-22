@@ -28,6 +28,7 @@ public:
 
 	void Cycle();
 	void Harvest(Barn& barn);
+	void Print();
 
 
 };

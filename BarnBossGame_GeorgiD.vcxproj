@@ -132,21 +132,33 @@
     <ClCompile Include="BarnBossGame_GeorgiD.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Farm.cpp" />
+    <ClCompile Include="Market.cpp" />
+    <ClCompile Include="MarketItem.cpp" />
+    <ClCompile Include="MarketManager.cpp" />
     <ClCompile Include="Namespaces.cpp">
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdcpp23</LanguageStandard>
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdcpp23</LanguageStandard>
     </ClCompile>
     <ClCompile Include="PlantEntity.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="TaskManager.cpp" />
     <ClCompile Include="User.cpp" />
+    <ClCompile Include="UserFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimalEntity.h" />
     <ClInclude Include="Barn.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Farm.h" />
+    <ClInclude Include="Market.h" />
+    <ClInclude Include="MarketItem.h" />
+    <ClInclude Include="MarketManager.h" />
     <ClInclude Include="Namespaces.h" />
     <ClInclude Include="PlantEntity.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="TaskManager.h" />
     <ClInclude Include="User.h" />
+    <ClInclude Include="UserFactory.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

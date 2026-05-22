@@ -2,7 +2,7 @@
 #include "Namespaces.h"
 #include "Entity.h"
 
-class AnimalEntity : Entity 
+class AnimalEntity : public Entity 
 {
 
 	int rewardCount = 0;

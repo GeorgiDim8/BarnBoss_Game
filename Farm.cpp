@@ -90,3 +90,12 @@ void Farm::Harvest(Barn& barn)
 		a->Harvest(barn);
 	}
 }
+
+void Farm::Print()
+{
+	std::cout << "There are currently " << GetCroplandCapacity() - GetPlantCount() << " empty plant spaces out of " <<
+		GetCroplandCapacity() << std::endl;
+
+	std::cout << "There are currently " << GetFarmlandCapacity() - GetAnimalCount() << " empty plant spaces out of " <<
+		GetFarmlandCapacity() << std::endl;
+}

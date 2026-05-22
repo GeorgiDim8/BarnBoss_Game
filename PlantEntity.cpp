@@ -80,6 +80,11 @@ void PlantEntity::SetGrown()
 {
     Grown = true;
 }
+PlantEntity::PlantEntity(Entities& e) : Entity(e)
+{
+
+
+}
 bool PlantEntity::GetGrown() const
 {
     return Grown;

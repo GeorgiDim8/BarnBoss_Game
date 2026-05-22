@@ -15,11 +15,12 @@ enum class Entities
 	Cornseed,
 	Corn,
 	Chicken,
-	Cow,
 	Egg,
+	Cow,
 	Milk
 };
 
 std::string EntityToString(Entities);
 Entities StringToEntity(const std::string&);
+Entities IdToEntity(int id);
 Entities& operator++(Entities& e);
