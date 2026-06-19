@@ -236,6 +236,12 @@ bool Game::ProcessPlayerCommand(Player& player,
 		ss >> id1;
 		return player.CompleteTask(t, id1);
 	}
+
+	if (command == "showScoreboard") 
+	{
+		s.showScoreboard(userManager.getUsers());
+		return true;
+	}
 	std::cout << "No matching command" << std::endl;
 	return true;
 	

@@ -142,6 +142,7 @@
     </ClCompile>
     <ClCompile Include="PlantEntity.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Scoreboard.cpp" />
     <ClCompile Include="Task.cpp" />
     <ClCompile Include="Taskboard.cpp" />
     <ClCompile Include="TaskManager.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="Namespaces.h" />
     <ClInclude Include="PlantEntity.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Scoreboard.h" />
     <ClInclude Include="Task.h" />
     <ClInclude Include="Taskboard.h" />
     <ClInclude Include="TaskManager.h" />

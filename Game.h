@@ -10,6 +10,7 @@ class Game
 	UserManager userManager;
 	Market m;
 	Taskboard t;
+	Scoreboard s;
 
 public:
 

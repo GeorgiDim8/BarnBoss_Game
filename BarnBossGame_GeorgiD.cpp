@@ -20,6 +20,7 @@ int main()
 		std::cout << std::endl;
 		if (input == "exit") 
 		{
+			FarmFrenzy.Save();
 			std::cout << "Game Saved Successfully. \n Goodbye!" << std::endl;
 			break;
 		}
