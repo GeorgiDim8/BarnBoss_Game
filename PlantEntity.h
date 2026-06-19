@@ -21,7 +21,7 @@ public:
 	void SetGrown();
 	bool Ready();
 	*/
-	PlantEntity(Entities& e);
+	PlantEntity(Entities e);
 
 	bool GetGrown() const;
 	void SetGrown();

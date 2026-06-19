@@ -32,7 +32,7 @@ Entities StringToEntity(const std::string& s)
 
 	else if (s == "Corn") return Entities::Corn;
 
-	else if (s == "Corn seed") return Entities::Cornseed;
+	else if (s == "CornSeed") return Entities::Cornseed;
 
 	else if (s == "Cow") return Entities::Cow;
 
@@ -42,7 +42,7 @@ Entities StringToEntity(const std::string& s)
 
 	else if (s == "Wheat") return Entities::Wheat;
 
-	else if (s == "Wheat seed") return Entities::Wheatseed;
+	else if (s == "WheatSeed") return Entities::Wheatseed;
 
 	else throw std::invalid_argument("Invalid product!");
 }
@@ -51,6 +51,15 @@ Entities IdToEntity(int id)
 {
 	Entities e = static_cast<Entities>(id);
 	return e;
+}
+
+Entities IntToEntity(int id)
+{
+	if (id == 1) return Entities::Wheatseed;
+	if (id == 2) return Entities::Cornseed;
+	if (id == 3) return Entities::Chicken;
+	if (id == 4) return Entities::Cow;
+	return Entities();
 }
 
 Entities& operator++(Entities& e)
@@ -67,4 +76,37 @@ bool IdCheck(int productId)
 		return false;
 	}
 	return true;
+}
+
+UserTypes StringToUserType(const std::string& t) 
+{
+	if (t == "MarketManager") return UserTypes::MarketManager;
+	if (t == "TaskManager") return UserTypes::TaskManager;
+	if (t == "Player") return UserTypes::Player;
+
+	throw std::invalid_argument("No such type");
+}
+
+std::string UserTypeToString(const UserTypes& t)
+{
+	switch (t) 
+	{
+	case UserTypes::Player:
+		{
+			return "Player";
+			break;
+		}
+	case UserTypes::MarketManager: 
+	{
+		return "MarketManager";
+		break;
+	}
+	case UserTypes::TaskManager: 
+	{
+		return "TaskManager";
+		break;
+	}
+
+	}
+	return "";
 }

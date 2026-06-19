@@ -12,7 +12,7 @@ class Entity
 
 public:
 
-	Entity(Entities& e);
+	Entity(const Entities& e);
 	Entity(const Entity& e);
 	int GetRequiredCycles() const;
 	int GetCurrentCycles() const;

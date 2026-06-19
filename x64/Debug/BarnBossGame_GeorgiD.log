@@ -1,8 +1,5 @@
-﻿  Barn.cpp
-  Namespaces.cpp
-  PlantEntity.cpp
+﻿  BarnBossGame_GeorgiD.cpp
+  Game.cpp
+  Taskboard.cpp
   Generating Code...
-D:\C++ files\sem2\BarnBossGame_GeorgiD\BarnBossGame_GeorgiD\PlantEntity.cpp(90,5): error C2561: 'PlantEntity::Reward': function must return a value
-      D:\C++ files\sem2\BarnBossGame_GeorgiD\BarnBossGame_GeorgiD\PlantEntity.cpp(86,23):
-      see declaration of 'PlantEntity::Reward'
-  
+  BarnBossGame_GeorgiD.vcxproj -> D:\C++ files\sem2\BarnBossGame_GeorgiD\x64\Debug\BarnBossGame_GeorgiD.exe

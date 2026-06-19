@@ -1,10 +1,11 @@
 #include "Player.h"
 #include "Namespaces.h"
+#include "Market.h"
+#include "Taskboard.h"
 
 Player::Player(const std::string& name, const std::string& password)
+	: User(name, password)
 {
-	SetName(name);
-	SetPassword(password);
 }
 
 void Player::SetBalance(int bal)
@@ -40,6 +41,8 @@ bool Player::ExpandCropland()
 	SetBalance(CheckBalance() - farm.GetCroplandCapacity() * 50);
 	farm.SetCroplandCapacity(farm.GetCroplandCapacity() + 1);
 
+	Cycle();
+
 	return true;
 }
 
@@ -51,22 +54,31 @@ bool Player::ExpandFarmland()
 	SetBalance(CheckBalance() - farm.GetFarmlandCapacity() * 50);
 	farm.SetFarmlandCapacity(farm.GetFarmlandCapacity() + 1);
 
+	Cycle();
+
 	return true;
 }
 
-bool Player::SowPlant(Entities& seedId)
+bool Player::SowPlant(const Entities& seedId)
 {
 	if (farm.GetCroplandCapacity() - farm.GetPlantCount() < 1)return false;
 
+	if (!GetBarn().Check(seedId, 1)) return false;
+
+	Cycle();
+	
+	GetBarn().RemoveItem(seedId, 1);
 
 	farm.AddPlant(std::make_unique<PlantEntity>(seedId));
 	
 	return true;
 }
 
-bool Player::AddAnimal(Entities animalId)
+bool Player::AddAnimal(const Entities& animalId)
 {
 	if (farm.GetFarmlandCapacity() - farm.GetAnimalCount() < 1)return false;
+
+	Cycle();
 
 	farm.AddAnimal(std::make_unique<AnimalEntity>(animalId));
 
@@ -85,7 +97,7 @@ void Player::OpenMarketCatalog(Market& market)
 
 bool Player::BuyItem(Market& market, int productId, int quantity)
 {
-	if (market.BuyItem(*this, IdToEntity(productId), quantity)) 
+	if (market.BuyItem(*this, market.GetTypeId(productId), quantity))
 	{
 		Cycle();
 		return true;
@@ -100,7 +112,7 @@ bool Player::SellItem(Market& market, int productId, int quantity)
 		return false;
 	}
 
-	if (market.SellItem(*this, IdToEntity(productId), quantity))
+	if (market.SellItem(*this, market.GetTypeId(productId), quantity))
 	{
 		Cycle();
 		return true;
@@ -146,4 +158,19 @@ void Player::SetScore(int s)
 void Player::Cycle()
 {
 	farm.Cycle();
+}
+
+void Player::profileInfo()
+{
+	std::cout << "ID: " << this->GetId() << std::endl;
+	std::cout << "Username: " << this->GetName() << std::endl;
+	std::cout << "Type: " << UserTypeToString(this->GetType()) << std::endl;
+	std::cout << "Balance: " << this->GetBalance() << std::endl;
+	std::cout << "Score: " << this->GetId() << std::endl;
+
+}
+
+UserTypes Player::GetType()
+{
+	return UserTypes::Player;
 }

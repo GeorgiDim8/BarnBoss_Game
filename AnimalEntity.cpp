@@ -1,6 +1,11 @@
 #include "AnimalEntity.h"
 
 
+AnimalEntity::AnimalEntity(const Entities& an)
+    : Entity(an)
+{
+}
+
 int AnimalEntity::GetRewardCount() const
 {
     return rewardCount;

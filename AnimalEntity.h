@@ -9,6 +9,7 @@ class AnimalEntity : public Entity
 
 public:
 
+	AnimalEntity(const Entities& an);
 	int GetRewardCount() const;
 	void SetRewardCount(int n);
 

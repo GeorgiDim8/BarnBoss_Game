@@ -2,27 +2,33 @@
 
 Taskboard::Taskboard()
 {
-	tasks.push_back(std::make_unique<Task>((StringToEntity("Wheat"), 5, 50, 10)));
-	tasks.push_back(std::make_unique<Task>((StringToEntity("Milk"), 3, 120, 20)));
+	tasks.push_back(std::make_unique<Task>(Entities::Wheat, 5, 50, 10));
+	tasks.push_back(std::make_unique<Task>(Entities::Milk, 3, 120, 20));
 
 }
 
-std::vector<std::unique_ptr<Task>> Taskboard::GetTasks()
+const std::vector<std::unique_ptr<Task>>& Taskboard::GetTasks() const
 {
 	return tasks;
 }
 
 void Taskboard::Print() const
 {
+	std::cout << "=== TASKBOARD ===" << std::endl;
+
 	for (const auto& t : tasks) 
 	{
 		t->Print();
 	}
 }
 
-void Taskboard::AddTask(Task t)
+bool Taskboard::AddTask(const Task& t)
 {
-	tasks.push_back(std::make_unique<Task>(t));
+	tasks.push_back(std::make_unique<Task>(t.GetReqiredProduct(),
+		t.GetRequiredQuantity(),
+		t.GetRewardBalance(),
+		t.GetRewardScore()));
+	return true;
 }
 
 bool Taskboard::CompleteTask(Player& player, int taskId)
@@ -33,8 +39,9 @@ bool Taskboard::CompleteTask(Player& player, int taskId)
 	}
 
 
-	for (const auto& t : GetTasks())
+	for (const auto& t : tasks)
 	{
+		std::cout << "Test1" << std::endl;
 		if ((*t).GetId() == taskId)
 		{
 			if (!player.GetBarn().Check((*t).GetReqiredProduct(), (*t).GetRequiredQuantity()))return false;
@@ -50,13 +57,25 @@ bool Taskboard::CompleteTask(Player& player, int taskId)
 	return false;
 }
 
-void Taskboard::RemoveTask(int taskId)
+bool Taskboard::RemoveTask(int taskId)
 {
+	if (!TaskExists(taskId)) return false;
 	tasks.erase(
 		std::remove_if(tasks.begin(), tasks.end(),
-			[&](const Task& t)
+			[&](const std::unique_ptr<Task>& t)
 			{
-				return t.GetId() == taskId;
+				return t->GetId() == taskId;
 			}),
 		tasks.end());
+	return true;
+}
+
+bool Taskboard::TaskExists(int taskId)
+{
+	for (const auto& t : tasks) 
+	{
+		if (t->GetId() == taskId) return true;
+	}
+
+	return false;
 }

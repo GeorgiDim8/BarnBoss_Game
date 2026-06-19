@@ -1,6 +1,6 @@
 #include "Entity.h"
 
-Entity::Entity(Entities& e)
+Entity::Entity(const Entities& e)
 {
 
     switch (e)
@@ -15,6 +15,19 @@ Entity::Entity(Entities& e)
         SetRequiredCycles(4);
         break;
     }
+
+    case Entities::Chicken:
+    {
+        SetRequiredCycles(3);
+        break;
+    }
+
+    case Entities::Cow:
+    {
+        SetRequiredCycles(4);
+        break;
+    }
+
     default:
     {
         std::cout << "Unable to grow " << EntityToString(e) << std::endl;

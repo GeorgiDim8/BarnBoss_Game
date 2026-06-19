@@ -14,5 +14,6 @@ public:
 	void ChangePrice(const Entities& e, int newPrice);
 	void Restock(const Entities& e, int count);
 	void Print() const;
+	Entities GetTypeId(int MarketId);
 
 };

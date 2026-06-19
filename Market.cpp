@@ -17,7 +17,11 @@ Market::Market()
 bool Market::BuyItem(Player& player, const Entities& e, int count)
 {
 	int tempCost = items[e].GetCost() * count;
-	if (player.CheckBalance() < tempCost || items[e].GetQuantity() < count) return false;
+	if (player.CheckBalance() < tempCost || items[e].GetQuantity() < count)
+	{
+		std::cout << "err1" << std::endl;
+		return false;
+	}
 
 	items[e].SetQuantity(items[e].GetQuantity() - count);
 	player.SetBalance(player.CheckBalance() - tempCost);
@@ -32,7 +36,7 @@ bool Market::SellItem(Player& player, const Entities& e, int count)
 
 	player.GetBarn().RemoveItem(e, count);
 	items[e].SetQuantity(items[e].GetQuantity() + count);
-	player.SetBalance(items[e].GetCost() * count);
+	player.SetBalance(player.GetBalance() + items[e].GetCost() * count);
 
 	return true;
 }
@@ -63,4 +67,17 @@ void Market::Print() const
 
 	}
 
+}
+
+Entities Market::GetTypeId(int MarketId)
+{
+	int i = 1;
+	for (const auto& [entity, m] : items)
+	{
+		if (i == MarketId) return entity;
+
+		i++;
+
+	}
+	// TODO: insert return statement here
 }

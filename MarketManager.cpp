@@ -1,9 +1,10 @@
 #include "MarketManager.h"
 
-MarketManager& MarketManager::GetInstance()
+
+
+MarketManager::MarketManager(const std::string& name, const std::string& pw)
+    : User(name, pw)
 {
-    static MarketManager instance;
-    return instance;
 }
 
 void MarketManager::openMarketCatalog(Market& m)
@@ -31,4 +32,14 @@ bool MarketManager::ChangePrice(Market& m, int productId, int quantity)
 
     m.ChangePrice(IdToEntity(productId), quantity);
     return true;
+}
+
+UserTypes MarketManager::GetType()
+{
+    return UserTypes::MarketManager;
+}
+
+void MarketManager::profileInfo()
+{
+    std::cout << "Market Manager logged in." << std::endl;
 }

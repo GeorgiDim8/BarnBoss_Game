@@ -1,8 +1,9 @@
 #pragma once
 #include "User.h"
 #include "Farm.h"
-#include "Market.h"
-#include "Taskboard.h"
+
+class Taskboard;
+class Market;
 
 class Player : public User 
 {
@@ -21,8 +22,8 @@ public:
 	void CheckFarm();
 	bool ExpandCropland();
 	bool ExpandFarmland();
-	bool SowPlant(Entities& seedId);
-	bool AddAnimal(Entities animalId);
+	bool SowPlant(const Entities& seedId);
+	bool AddAnimal(const Entities& animalId);
 	void Harvest(Barn& barn);
 	void OpenMarketCatalog(Market& market);
 	bool BuyItem(Market& market, int productId, int quantity);
@@ -36,4 +37,6 @@ public:
 	void SetScore(int s);
 	void Cycle();
 
+	void profileInfo() override;
+	UserTypes GetType() override;
 };

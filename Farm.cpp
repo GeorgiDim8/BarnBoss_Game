@@ -39,7 +39,7 @@ bool Farm::AddPlant(std::unique_ptr<PlantEntity> pl)
 	}
 	else 
 	{
-		//std::cout << "Cropland is full" << std::endl;
+		std::cout << "Cropland is full" << std::endl;
 		return false;
 	}
 }
@@ -53,7 +53,7 @@ bool Farm::AddAnimal(std::unique_ptr<AnimalEntity> an)
 	}
 	else
 	{
-		//std::cout << "Farmland is full" << std::endl;
+		std::cout << "Farmland is full" << std::endl;
 		return false;
 	}
 	
@@ -96,6 +96,6 @@ void Farm::Print()
 	std::cout << "There are currently " << GetCroplandCapacity() - GetPlantCount() << " empty plant spaces out of " <<
 		GetCroplandCapacity() << std::endl;
 
-	std::cout << "There are currently " << GetFarmlandCapacity() - GetAnimalCount() << " empty plant spaces out of " <<
+	std::cout << "There are currently " << GetFarmlandCapacity() - GetAnimalCount() << " empty animal spaces out of " <<
 		GetFarmlandCapacity() << std::endl;
 }

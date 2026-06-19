@@ -1,6 +1,9 @@
 #pragma once
 #include<memory>
 #include<string>
+#include "Player.h"
+#include "MarketManager.h"
+#include "TaskManager.h"
 #include "User.h"
 
 class UserFactory 

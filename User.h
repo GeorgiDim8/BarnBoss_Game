@@ -1,5 +1,7 @@
 #pragma once
 #include<string>
+#include<stdexcept>
+#include "Namespaces.h"
 
 class User 
 {
@@ -10,14 +12,18 @@ class User
 
 public:
 
+	User(const std::string& u, const std::string& p);
+
 	std::string GetPassword();
+	std::string GetName();
+	int GetId();
 	void SetPassword(const std::string& password);
 	void SetName(const std::string& name);
 
-	void logout();
+	
 	void changePassword(const std::string& oldPassword, const std::string& newPassword);
-	void profileInfo();
-	virtual void Register(const std::string& username, const std::string& password, const std::string& type);
+	virtual void profileInfo() = 0;
+	virtual UserTypes GetType() = 0;
 
 	virtual ~User() = default;
 };

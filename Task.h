@@ -32,4 +32,3 @@ public:
 
 };
 
-int Task::IdGenerator = 1;

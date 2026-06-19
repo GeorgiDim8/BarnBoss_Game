@@ -9,6 +9,7 @@ private:
 
 public:
 
+	MarketItem() = default;
 	MarketItem(int q, int c);
 	int GetQuantity() const;
 	int GetCost() const;

@@ -1,5 +1,4 @@
 #pragma once
-#include "Taskmanager.h"
 #include "Namespaces.h"
 #include "Task.h"
 #include <vector>
@@ -13,10 +12,11 @@ class Taskboard
 
 public:
 	Taskboard();
-	std::vector<std::unique_ptr<Task>> GetTasks();
+	const std::vector<std::unique_ptr<Task>>& GetTasks() const;
 
 	void Print() const;
-	void AddTask(Task t);
+	bool AddTask(const Task& t);
 	bool CompleteTask(Player& player, int taskId);
-	void RemoveTask(int taskId);
+	bool RemoveTask(int taskId);
+	bool TaskExists(int taskId);
 };

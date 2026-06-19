@@ -74,3 +74,4 @@ void Task::Print() const
         << " Score" << std::endl;
 }
 
+int Task::IdGenerator = 1;

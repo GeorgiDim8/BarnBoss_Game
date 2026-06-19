@@ -80,7 +80,7 @@ void PlantEntity::SetGrown()
 {
     Grown = true;
 }
-PlantEntity::PlantEntity(Entities& e) : Entity(e)
+PlantEntity::PlantEntity(Entities e) : Entity(e)
 {
 
 
@@ -98,6 +98,7 @@ void PlantEntity::Cycle()
         Entities temp = GetEntity();
         SetEntity(++temp);
 
+        SetGrown();
         SetRequiredCycles(0);
         SetCurrentCycles(0);
     }

@@ -1,15 +1,20 @@
 #pragma once
 #include "User.h"
+#include "Namespaces.h"
+#include "Taskboard.h"
 
 class TaskManager : public User
 {
-	TaskManager();
+	
 
 public:
 
-	static TaskManager& GetInstance();
+	TaskManager(const std::string& name, const std::string& pw);
 
-	TaskManager(const TaskManager& m) = delete;
-	TaskManager& operator=(const TaskManager& m) = delete;
+	void showTasks(Taskboard& t);
+	bool AddTask(Taskboard& t, const std::string& product, int quant, int rbal, int rscore);
+	bool RemoveTask(Taskboard& t, int taskId);
 
+	UserTypes GetType() override;
+	void profileInfo() override;
 };
