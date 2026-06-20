@@ -17,6 +17,7 @@ bool Game::ProcessCommand(const std::string& input)
 
 		ss >> username >> password >> type;
 
+		if (username.size() < 1 || password.size() < 4 || type.size() < 6)throw std::invalid_argument("Invalid register input!");
 		
 		if (userManager.Register(username, password, type))
 		{
@@ -65,8 +66,23 @@ bool Game::ProcessCommand(const std::string& input)
 		return true;
 	}
 
+	if (command == "help") 
+	{
+		std::cout << "Available commands: \n register [username] [password] [ProfileType] \n"
+			<< "login [username][password] \n logout \n exit \n help \n profileinfo \n"
+			<< "\n Player specific commands: \n checkBarn \n checkBalance \n checkScore \n "
+			<< "checkFarm \n expandFarmland \n expandCropland \n harvest \n openMarketCatalog \n"
+			<< "sowPlant [PlantType] \n addAnimal [animalType] \n buyItem [itemId] [Quantity] \n"
+			<< "sellItem [itemId] [Quantity] \n showTaskboard \n completeTask [taskId] \n"
+			<< "showScoreboard \n \n MarketManager specific commands: \n openMarketCatalog \n"
+			<< "restock [ItemId] [Quantity] \n changePrice [ItemId] [Price] \n \n "
+			<< "TaskManager specific commands: \n showTasks \n addtask [Product] [Quantity] [RewardBalance] [Score] \n "
+			<< "removeTask [TaskId] \n \n";
+	}
+
 	if (input.starts_with("profileInfo"))
 	{
+		if (!userManager.GetCurrentUser())throw std::invalid_argument("No user currently logged in!");
 		userManager.GetCurrentUser()->profileInfo();
 		return true;
 	}
@@ -185,14 +201,14 @@ bool Game::ProcessPlayerCommand(Player& player,
 	{
 		int plantT;
 		ss >> plantT;
-
+		if (plantT != 1 && plantT != 2)throw std::invalid_argument("Invalid plant type");
 		return player.SowPlant(IntToEntity(plantT));
 	}
 	if (command == "addAnimal") 
 	{
 		int animalT;
 		ss >> animalT;
-
+		if (animalT != 3 && animalT != 4)throw std::invalid_argument("Invalid animal type");
 		return player.AddAnimal(IntToEntity(animalT));
 	}
 
@@ -213,7 +229,6 @@ bool Game::ProcessPlayerCommand(Player& player,
 	{
 		int id1, qnt;
 		ss >> id1 >> qnt;
-		std::cout << "Ok1" << std::endl;
 		return player.BuyItem(m, id1, qnt);
 	}
 
@@ -224,7 +239,7 @@ bool Game::ProcessPlayerCommand(Player& player,
 		return player.SellItem(m, id1, qnt);
 	}
 
-	if (command == "showTaskBoard") 
+	if (command == "showTaskboard") 
 	{
 		player.ShowTaskBoard(t);
 		return true;
@@ -308,5 +323,317 @@ bool Game::ProcessTaskCommand(TaskManager& manager, const std::string& command, 
 
 void Game::Save()
 {
+	std::ofstream out("save.txt");
 
+	if (!out.is_open())
+	{
+		std::cout << "Failed to open save file!\n";
+		return;
+	}
+
+	out << "[USERS]\n";
+
+	for (const auto& userPtr : userManager.getUsers())
+	{
+		User* u = userPtr.get();
+
+		out << (int)u->GetType() << " "
+			<< u->GetName() << " "
+			<< u->GetPassword() << " ";
+
+		if (u->GetType() == UserTypes::Player)
+		{
+			Player* p = static_cast<Player*>(u);
+			out << p->GetScore() << " "
+				<< p->GetBalance();
+		}
+
+		out << "\n";
+	}
+
+	out << "[MARKET]\n";
+
+	for (const auto& [entity, item] : m.getItems())
+	{
+		out << (int)entity << " "
+			<< item.GetQuantity() << " "
+			<< item.GetCost() << "\n";
+	}
+
+	out << "[TASKS]\n";
+
+	for (const auto& taskPtr : t.GetTasks())
+	{
+		out << (int)taskPtr->GetReqiredProduct() << " "
+			<< taskPtr->GetRequiredQuantity() << " "
+			<< taskPtr->GetRewardBalance() << " "
+			<< taskPtr->GetRewardScore()
+			<< "\n";
+	}
+
+	out << "[FARMS]\n";
+
+	for (const auto& userPtr : userManager.getUsers())
+	{
+		if (userPtr->GetType() != UserTypes::Player)
+			continue;
+
+		Player* p = static_cast<Player*>(userPtr.get());
+
+		out << p->GetName() << "\n";
+
+		Farm& farm = p->GetFarm();
+
+		out << farm.GetPlantCount() << "\n";
+
+		for (const auto& plant : farm.GetPlants())
+		{
+			out << EntityToString(plant->GetEntity()) << " "
+				<< plant->GetCurrentCycles()
+				<< "\n";
+		}
+
+		out << farm.GetAnimalCount() << "\n";
+
+		for (const auto& animal : farm.GetAnimals())
+		{
+			out << EntityToString(animal->GetEntity()) << " "
+				<< animal->GetCurrentCycles()
+				<< "\n";
+		}
+	}
+
+	out << "[BARNS]\n";
+
+	for (const auto& userPtr : userManager.getUsers())
+	{
+		if (userPtr->GetType() != UserTypes::Player)
+			continue;
+
+		Player* p = static_cast<Player*>(userPtr.get());
+
+		out << p->GetName() << "\n";
+
+		const auto& barnItems = p->GetBarn().getProducts();
+
+		out << barnItems.size() << "\n";
+
+		for (const auto& [entity, qty] : barnItems)
+		{
+			out << EntityToString(entity) << " " << qty << "\n";
+		}
+	}
+
+	out.close();
+
+	
+}
+
+bool Game::Load()
+{
+	std::ifstream in("save.txt");
+
+	if (!in.is_open())
+	{
+		std::cout << "No save file found. Creating new world...\n";
+		return false;
+	}
+
+	std::string line;
+	std::string section;
+
+	while (std::getline(in, line))
+	{
+		if (line.empty()) continue;
+
+		if (line[0] == '[')
+		{
+			section = line;
+			continue;
+		}
+
+		std::stringstream ss(line);
+
+		if (section == "[USERS]")
+		{
+			int type;
+			std::string username, password;
+			ss >> type >> username >> password;
+
+			std::string typeStr;
+
+			if (type == (int)UserTypes::Player)
+				typeStr = "Player";
+			else if (type == (int)UserTypes::MarketManager)
+				typeStr = "MarketManager";
+			else if (type == (int)UserTypes::TaskManager)
+				typeStr = "TaskManager";
+
+			auto user = UserFactory::createUser(username, password, typeStr);
+
+			if (!user)
+				continue;
+
+			if (type == (int)UserTypes::Player)
+			{
+				int score, balance;
+				ss >> score >> balance;
+
+				Player* p = static_cast<Player*>(user.get());
+				p->SetScore(score);
+				p->SetBalance(balance);
+			}
+
+			userManager.AddUser(user);
+		}
+
+		else if (section == "[MARKET]")
+		{
+			int entity, qty, cost;
+			ss >> entity >> qty >> cost;
+
+			m.SetStock(static_cast<Entities>(entity), qty);
+			m.ChangePrice(static_cast<Entities>(entity), cost);
+		}
+
+
+		else if (section == "[TASKS]")
+		{
+			int prod, qty, bal, score;
+			ss  >> prod >> qty >> bal >> score;
+
+			Task a(static_cast<Entities>(prod),
+				qty,
+				bal,
+				score);
+
+			t.AddTask(a);
+		}
+		else if (section == "[FARMS]")
+		{
+			std::string username;
+			std::getline(in, line);
+			username = line;
+
+			Player* player = nullptr;
+
+			for (auto& u : userManager.getUsers())
+			{
+				if (u->GetType() == UserTypes::Player &&
+					u->GetName() == username)
+				{
+					player = static_cast<Player*>(u.get());
+					break;
+				}
+			}
+
+			if (!player)
+				continue;
+
+			std::getline(in, line);
+			int cropCap = std::stoi(line);
+
+			std::getline(in, line);
+			int farmCap = std::stoi(line);
+
+			player->GetFarm().SetCroplandCapacity(cropCap);
+			player->GetFarm().SetFarmlandCapacity(farmCap);
+
+			std::getline(in, line);
+			int plantCount = std::stoi(line);
+			
+
+			for (int i = 0; i < plantCount; i++)
+			{
+				std::getline(in, line);
+				std::stringstream ss(line);
+
+				std::string type;
+				int cycle;
+
+				ss >> type >> cycle;
+
+				PlantEntity plant(StringToEntity(type));
+
+				plant.SetCurrentCycles(cycle);
+
+				player->GetFarm().AddPlant(std::make_unique<PlantEntity>(plant));
+			}
+
+			std::getline(in, line);
+			int animalCount = std::stoi(line);
+
+			for (int i = 0; i < animalCount; i++)
+			{
+				std::getline(in, line);
+				std::stringstream ss(line);
+
+				std::string type;
+				int cycle;
+
+				ss >> type >> cycle;
+
+				AnimalEntity animal(StringToEntity(type));
+
+				animal.SetCurrentCycles(cycle);
+
+				player->GetFarm().AddAnimal(std::make_unique<AnimalEntity>(animal));
+			}
+		}
+		
+
+		else if (section == "[BARNS]")
+{
+    std::string username;
+    std::getline(in, username);
+
+    Player* player = nullptr;
+
+    for (auto& u : userManager.getUsers())
+    {
+        if (u->GetType() == UserTypes::Player && u->GetName() == username)
+        {
+            player = static_cast<Player*>(u.get());
+            break;
+        }
+    }
+
+    if (!player)
+        continue;
+
+    std::string line;
+
+    std::getline(in, line);
+    int itemCount = std::stoi(line);
+
+    for (int i = 0; i < itemCount; i++)
+    {
+        std::getline(in, line);
+        std::stringstream ss(line);
+
+        std::string entityStr;
+        int qty;
+
+        ss >> entityStr >> qty;
+
+        Entities e = StringToEntity(entityStr);
+
+        player->GetBarn().AddItem(e, qty);
+    }
+}
+	}
+
+
+	std::cout << "Game loaded successfully!\n";
+	return true;
+}
+
+Market& Game::getMarket()
+{
+	return m;
+}
+
+Taskboard& Game::getTaskboard()
+{
+	return t;
 }

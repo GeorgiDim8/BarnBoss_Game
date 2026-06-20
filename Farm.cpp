@@ -30,6 +30,16 @@ int Farm::GetAnimalCount()
 	return animals.size();
 }
 
+std::vector<std::unique_ptr<PlantEntity>>& Farm::GetPlants()
+{
+	return plants;
+}
+
+std::vector<std::unique_ptr<AnimalEntity>>& Farm::GetAnimals()
+{
+	return animals;
+}
+
 bool Farm::AddPlant(std::unique_ptr<PlantEntity> pl)
 {
 	if (GetCroplandCapacity() > GetPlantCount())

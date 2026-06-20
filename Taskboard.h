@@ -12,6 +12,7 @@ class Taskboard
 
 public:
 	Taskboard();
+	void Initialize();
 	const std::vector<std::unique_ptr<Task>>& GetTasks() const;
 
 	void Print() const;

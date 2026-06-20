@@ -63,3 +63,8 @@ const std::vector<std::unique_ptr<User>>& UserManager::getUsers() const
 {
     return users;
 }
+
+void UserManager::AddUser(std::unique_ptr<User>& user)
+{
+    users.push_back(std::move(user));
+}

@@ -32,6 +32,7 @@ public:
 	bool CompleteTask(Taskboard& taskboard, int taskId);
 
 	Barn& GetBarn();
+	Farm& GetFarm();
 	int GetBalance();
 	int GetScore();
 	void SetScore(int s);

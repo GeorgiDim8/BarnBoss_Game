@@ -11,7 +11,12 @@ int main()
 	std::cout << "            BARN BOSS\n";
 	std::cout << "========================================\n";
 
-
+	if (!FarmFrenzy.Load()) 
+	{
+		FarmFrenzy.getMarket().Initialize();
+		FarmFrenzy.getTaskboard().Initialize();
+	}
+	std::cout << "Write \\help\\ for list of commands" << std::endl;
 
 	while (true) 
 	{
@@ -24,8 +29,14 @@ int main()
 			std::cout << "Game Saved Successfully. \n Goodbye!" << std::endl;
 			break;
 		}
-		if (!FarmFrenzy.ProcessCommand(input))
-			std::cout << "Unsuccessful command!" << std::endl;
+		try {
+			if (!FarmFrenzy.ProcessCommand(input))
+				std::cout << "Unsuccessful command!" << std::endl;
+		}
+		catch (std::exception& e) 
+		{
+			std::cout << e.what() << std::endl;
+		}
 
 	}
 

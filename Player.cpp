@@ -81,6 +81,7 @@ bool Player::AddAnimal(const Entities& animalId)
 	Cycle();
 
 	farm.AddAnimal(std::make_unique<AnimalEntity>(animalId));
+	barn.RemoveItem(animalId, 1);
 
 	return true;
 }
@@ -97,6 +98,8 @@ void Player::OpenMarketCatalog(Market& market)
 
 bool Player::BuyItem(Market& market, int productId, int quantity)
 {
+	if (productId < 1 || productId > 8)throw std::invalid_argument("No existing itemID");
+
 	if (market.BuyItem(*this, market.GetTypeId(productId), quantity))
 	{
 		Cycle();
@@ -138,6 +141,11 @@ bool Player::CompleteTask(Taskboard& taskboard, int taskId)
 Barn& Player::GetBarn()
 {
 	return barn;
+}
+
+Farm& Player::GetFarm()
+{
+	return farm;
 }
 
 int Player::GetBalance()

@@ -4,6 +4,7 @@
 #include "Taskboard.h"
 #include "Scoreboard.h"
 #include<sstream>
+#include<fstream>
 
 class Game 
 {
@@ -25,4 +26,7 @@ public:
 		const std::string& command,
 		std::stringstream& ss);
 	void Save();
+	bool Load();
+	Market& getMarket();
+	Taskboard& getTaskboard();
 };

@@ -25,6 +25,7 @@ void AnimalEntity::Cycle()
 
         SetCurrentCycles(0);
     }
+    std::cout << GetCurrentCycles() << " - current, req - " << GetRequiredCycles() << std::endl;
 }
 
 bool AnimalEntity::Harvest(Barn& barn)

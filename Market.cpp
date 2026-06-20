@@ -2,7 +2,14 @@
 
 Market::Market()
 {
-	items[Entities::Chicken] = MarketItem(10,25);
+	
+
+
+}
+
+void Market::Initialize()
+{
+	items[Entities::Chicken] = MarketItem(10, 25);
 	items[Entities::Egg] = MarketItem(15, 30);
 	items[Entities::Cow] = MarketItem(5, 50);
 	items[Entities::Milk] = MarketItem(10, 60);
@@ -10,16 +17,15 @@ Market::Market()
 	items[Entities::Wheat] = MarketItem(20, 15);
 	items[Entities::Cornseed] = MarketItem(20, 15);
 	items[Entities::Corn] = MarketItem(20, 20);
-
-
 }
 
 bool Market::BuyItem(Player& player, const Entities& e, int count)
 {
+	if (count <= 0) throw std::invalid_argument("Count cannot be less than 1!");
 	int tempCost = items[e].GetCost() * count;
 	if (player.CheckBalance() < tempCost || items[e].GetQuantity() < count)
 	{
-		std::cout << "err1" << std::endl;
+		throw std::invalid_argument("Invalid BuyItem command!");
 		return false;
 	}
 
@@ -51,6 +57,11 @@ void Market::Restock(const Entities& e, int count)
 	items[e].SetQuantity(items[e].GetQuantity() + count);
 }
 
+void Market::SetStock(const Entities& e, int count)
+{
+	items[e].SetQuantity(count);
+}
+
 void Market::Print() const
 {
 	std::cout<<"=== MARKET CATALOG ==="<<std::endl;
@@ -80,4 +91,10 @@ Entities Market::GetTypeId(int MarketId)
 
 	}
 	// TODO: insert return statement here
+}
+
+const std::unordered_map<Entities, MarketItem>& Market::getItems() const
+{
+	return items;
+
 }

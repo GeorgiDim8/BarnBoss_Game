@@ -24,6 +24,11 @@ bool Barn::Check(Entities e, int count) const
 	return loc != products.end() && loc->second >= count;
 }
 
+std::map<Entities, int> Barn::getProducts() const
+{
+	return products;
+}
+
 void Barn::print()
 {
 

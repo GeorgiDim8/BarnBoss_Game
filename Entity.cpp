@@ -2,6 +2,7 @@
 
 Entity::Entity(const Entities& e)
 {
+    object = e;
 
     switch (e)
     {

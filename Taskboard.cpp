@@ -2,9 +2,14 @@
 
 Taskboard::Taskboard()
 {
+
+}
+
+void Taskboard::Initialize()
+{
+
 	tasks.push_back(std::make_unique<Task>(Entities::Wheat, 5, 50, 10));
 	tasks.push_back(std::make_unique<Task>(Entities::Milk, 3, 120, 20));
-
 }
 
 const std::vector<std::unique_ptr<Task>>& Taskboard::GetTasks() const
@@ -41,7 +46,6 @@ bool Taskboard::CompleteTask(Player& player, int taskId)
 
 	for (const auto& t : tasks)
 	{
-		std::cout << "Test1" << std::endl;
 		if ((*t).GetId() == taskId)
 		{
 			if (!player.GetBarn().Check((*t).GetReqiredProduct(), (*t).GetRequiredQuantity()))return false;

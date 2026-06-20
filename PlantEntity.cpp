@@ -101,7 +101,9 @@ void PlantEntity::Cycle()
         SetGrown();
         SetRequiredCycles(0);
         SetCurrentCycles(0);
+        
     }
+    std::cout << GetCurrentCycles() << " - current, req - " << GetRequiredCycles() << std::endl;
 }
 
 bool PlantEntity::Harvest(Barn& barn)

@@ -22,6 +22,8 @@ public:
 	int GetFarmlandCapacity() const;
 	int GetPlantCount() const;
 	int GetAnimalCount();
+	std::vector<std::unique_ptr<PlantEntity>>& GetPlants();
+	std::vector<std::unique_ptr<AnimalEntity>>& GetAnimals();
 
 	bool AddPlant(std::unique_ptr<PlantEntity> pl);
 	bool AddAnimal(std::unique_ptr<AnimalEntity> an);

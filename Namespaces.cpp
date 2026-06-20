@@ -19,7 +19,7 @@ std::string EntityToString(Entities e)
 
 		case Entities::Wheat: { return "Wheat"; }
 
-		case Entities::Wheatseed: { return "Wheat seed"; }
+		case Entities::Wheatseed: { return "Wheatseed"; }
 	
 		default: { return "Unknown"; }
 	}

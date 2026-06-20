@@ -26,6 +26,7 @@ public:
 	User* GetCurrentUser();
 
 	const std::vector<std::unique_ptr<User>>& getUsers() const;
+	void AddUser(std::unique_ptr<User>& user);
 
 
 
