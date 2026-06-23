@@ -9,7 +9,7 @@ std::string EntityToString(Entities e)
 
 		case Entities::Corn: { return "Corn"; }
 						   
-		case Entities::Cornseed: { return "Cornseed"; }
+		case Entities::Cornseed: { return "CornSeed"; }
 
 		case Entities::Cow: { return "Cow"; }
 
@@ -19,7 +19,7 @@ std::string EntityToString(Entities e)
 
 		case Entities::Wheat: { return "Wheat"; }
 
-		case Entities::Wheatseed: { return "Wheatseed"; }
+		case Entities::Wheatseed: { return "WheatSeed"; }
 	
 		default: { return "Unknown"; }
 	}

@@ -174,7 +174,7 @@ void Player::profileInfo()
 	std::cout << "Username: " << this->GetName() << std::endl;
 	std::cout << "Type: " << UserTypeToString(this->GetType()) << std::endl;
 	std::cout << "Balance: " << this->GetBalance() << std::endl;
-	std::cout << "Score: " << this->GetId() << std::endl;
+	std::cout << "Score: " << this->GetScore() << std::endl;
 
 }
 

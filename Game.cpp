@@ -72,7 +72,7 @@ bool Game::ProcessCommand(const std::string& input)
 			<< "login [username][password] \n logout \n exit \n help \n profileinfo \n"
 			<< "\n Player specific commands: \n checkBarn \n checkBalance \n checkScore \n "
 			<< "checkFarm \n expandFarmland \n expandCropland \n harvest \n openMarketCatalog \n"
-			<< "sowPlant [PlantType] \n addAnimal [animalType] \n buyItem [itemId] [Quantity] \n"
+			<< "sowPlant [PlantType] (1 = WheatSeed, 2 = CornSeed) \n addAnimal [animalType] (3 = Chicken, 4 = Cow) \n buyItem [itemId] [Quantity] \n"
 			<< "sellItem [itemId] [Quantity] \n showTaskboard \n completeTask [taskId] \n"
 			<< "showScoreboard \n \n MarketManager specific commands: \n openMarketCatalog \n"
 			<< "restock [ItemId] [Quantity] \n changePrice [ItemId] [Price] \n \n "
@@ -383,6 +383,9 @@ void Game::Save()
 		out << p->GetName() << "\n";
 
 		Farm& farm = p->GetFarm();
+		
+		out << farm.GetCroplandCapacity() << "\n";
+		out << farm.GetFarmlandCapacity() << "\n";
 
 		out << farm.GetPlantCount() << "\n";
 
@@ -501,7 +504,6 @@ bool Game::Load()
 		{
 			int prod, qty, bal, score;
 			ss  >> prod >> qty >> bal >> score;
-
 			Task a(static_cast<Entities>(prod),
 				qty,
 				bal,
@@ -511,9 +513,10 @@ bool Game::Load()
 		}
 		else if (section == "[FARMS]")
 		{
-			std::string username;
-			std::getline(in, line);
-			username = line;
+			//std::string username;
+			//std::getline(in, line);
+			//username = line;
+			std::string username = line;
 
 			Player* player = nullptr;
 
@@ -542,11 +545,13 @@ bool Game::Load()
 			std::getline(in, line);
 			int plantCount = std::stoi(line);
 			
+			
 
 			for (int i = 0; i < plantCount; i++)
 			{
 				std::getline(in, line);
 				std::stringstream ss(line);
+
 
 				std::string type;
 				int cycle;
@@ -568,6 +573,7 @@ bool Game::Load()
 				std::getline(in, line);
 				std::stringstream ss(line);
 
+
 				std::string type;
 				int cycle;
 
@@ -584,9 +590,8 @@ bool Game::Load()
 
 		else if (section == "[BARNS]")
 {
-    std::string username;
-    std::getline(in, username);
 
+	std::string username = line;
     Player* player = nullptr;
 
     for (auto& u : userManager.getUsers())
@@ -615,6 +620,7 @@ bool Game::Load()
         int qty;
 
         ss >> entityStr >> qty;
+
 
         Entities e = StringToEntity(entityStr);
 
