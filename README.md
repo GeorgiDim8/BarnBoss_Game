@@ -158,4 +158,4 @@ g++ *.cpp -o barn_boss
 
 ## Author
 
-`[Your Name]` — Faculty Number: `[Your FN]`
+Georgi Nikolaev Dimitrov, 2nd year at Faculty of Mathematics and Informatics, Sofia University
